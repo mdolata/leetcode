@@ -6,15 +6,15 @@ import io.kotest.matchers.shouldBe
 
 
 internal class SolutionTest : BehaviorSpec({
-    val instance = Solution()
-    given("Two simple numbers") {
-        val inputs = listOf(Pair(2, 2), Pair(10, 5), Pair(3, 5), Pair(22, 5),Pair(0, 5))
-        testCase(inputs, instance)
-    }
-    given("Two small numbers with overload") {
-        val inputs = listOf(Pair(19, 2), Pair(1, 9), Pair(10, 10), Pair(18, 9), Pair(95, 5))
-        testCase(inputs, instance)
-    }
+//    val instance = Solution()
+//    given("Two simple numbers") {
+//        val inputs = listOf(Pair(2, 2), Pair(10, 5), Pair(3, 5), Pair(22, 5),Pair(0, 5))
+//        testCase(inputs, instance)
+//    }
+//    given("Two small numbers with overload") {
+//        val inputs = listOf(Pair(19, 2), Pair(1, 9), Pair(10, 10), Pair(18, 9), Pair(95, 5))
+//        testCase(inputs, instance)
+//    }
 })
 
 private suspend fun GivenScope.testCase(
