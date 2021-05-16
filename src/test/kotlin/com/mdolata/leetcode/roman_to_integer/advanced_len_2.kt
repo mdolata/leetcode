@@ -1,14 +1,15 @@
-import com.mdolata.leetcode.roman_to_integer.Solution
+package com.mdolata.leetcode.roman_to_integer
+
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class SolutionTest5 : BehaviorSpec({
-    given("Input of length 3") {
+class SolutionTest4 : BehaviorSpec({
+    given("Input of length 2") {
         val instance = Solution()
         val params = mapOf(
-            "MCM" to 1900, "MIX" to 1009,
-            "CXL" to 140, "CXC" to 190,
-            "XIV" to 14, "LIX" to 59
+            "IV" to 4, "IX" to 9,
+            "XL" to 40, "XC" to 90,
+            "CD" to 400, "CM" to 900
         )
         for ((k, v) in params) {
             When("run with $k") {
