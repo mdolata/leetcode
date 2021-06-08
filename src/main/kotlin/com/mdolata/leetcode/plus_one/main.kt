@@ -1,39 +1,46 @@
 package com.mdolata.leetcode.plus_one
 
-
-fun main() {
-    Solution().plusOne(intArrayOf(8, 9, 9, 9))
-}
-
 class Solution {
-    fun plusOne(digits: IntArray): IntArray {
-        if (digits.isEmpty()) {
-            return intArrayOf()
+    fun plusOne(digits: IntArray) = when (val lastDigit = digits.last()) {
+        9 -> {
+            handleLastDigit9(digits)
         }
-
-        val lastDigit = digits.last()
-        val result = if (lastDigit == 9) {
-            if (digits.size == 1) {
-                return intArrayOf(1, 0)
-            }
-
-            val tmp = plusOne(digits.sliceArray(IntRange(0, digits.lastIndex - 1)))
-            val tmpres = if (digits.all { i -> i == 9 }) {
-                IntArray(digits.size + 1)
-            } else {
-                IntArray(digits.size)
-            }
-            tmp.forEachIndexed { index, digit ->
-                tmpres[index] = digit
-            }
-            tmpres[tmpres.lastIndex] = 0
-            tmpres
-        } else {
-            digits[digits.lastIndex] = lastDigit + 1
-            digits
+        else -> {
+            handleOthers(digits, lastDigit)
         }
+    }
 
+    private fun handleOthers(digits: IntArray, lastDigit: Int): IntArray {
+        digits[digits.lastIndex] = lastDigit + 1
+        return digits
+    }
 
-        return result
+    private fun handleLastDigit9(digits: IntArray): IntArray = when (digits.size) {
+        1 -> {
+            intArrayOf(1, 0)
+        }
+        else -> {
+            val tmp = plusOne(removeLastElement(digits))
+            val result = createIntArray(digits)
+            copyAndSetLastToZero(tmp, result)
+        }
     }
 }
+
+private fun copyAndSetLastToZero(tmp: IntArray, result: IntArray): IntArray {
+    tmp.forEachIndexed { index, digit ->
+        result[index] = digit
+    }
+    result[result.lastIndex] = 0
+    return result
+}
+
+private fun createIntArray(digits: IntArray): IntArray {
+    return if (digits.all { i -> i == 9 }) {
+        IntArray(digits.size + 1)
+    } else {
+        IntArray(digits.size)
+    }
+}
+
+private fun removeLastElement(digits: IntArray) = digits.sliceArray(IntRange(0, digits.lastIndex - 1))
