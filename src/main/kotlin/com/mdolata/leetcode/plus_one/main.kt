@@ -1,17 +1,17 @@
 package com.mdolata.leetcode.plus_one
 
 class Solution {
-    fun plusOne(digits: IntArray) = when (val lastDigit = digits.last()) {
+    fun plusOne(digits: IntArray) = when (digits.last()) {
         9 -> {
             handleLastDigit9(digits)
         }
         else -> {
-            handleOthers(digits, lastDigit)
+            handleOthers(digits)
         }
     }
 
-    private fun handleOthers(digits: IntArray, lastDigit: Int): IntArray {
-        digits[digits.lastIndex] = lastDigit + 1
+    private fun handleOthers(digits: IntArray): IntArray {
+        digits[digits.lastIndex] = digits.last() + 1
         return digits
     }
 
@@ -20,27 +20,18 @@ class Solution {
             intArrayOf(1, 0)
         }
         else -> {
-            val tmp = plusOne(removeLastElement(digits))
-            val result = createIntArray(digits)
-            copyAndSetLastToZero(tmp, result)
+            copyAndSetLastToZero(plusOne(removeLastElement(digits)), digits)
         }
     }
-}
 
-private fun copyAndSetLastToZero(tmp: IntArray, result: IntArray): IntArray {
-    tmp.forEachIndexed { index, digit ->
-        result[index] = digit
+    private fun copyAndSetLastToZero(newArray: IntArray, oldArray: IntArray): IntArray = when {
+        oldArray.all { i -> i == 9 } -> {
+            newArray.copyOf(oldArray.size + 1)
+        }
+        else -> {
+            newArray.copyOf(oldArray.size)
+        }
     }
-    result[result.lastIndex] = 0
-    return result
-}
 
-private fun createIntArray(digits: IntArray): IntArray {
-    return if (digits.all { i -> i == 9 }) {
-        IntArray(digits.size + 1)
-    } else {
-        IntArray(digits.size)
-    }
+    private fun removeLastElement(digits: IntArray) = digits.sliceArray(IntRange(0, digits.lastIndex - 1))
 }
-
-private fun removeLastElement(digits: IntArray) = digits.sliceArray(IntRange(0, digits.lastIndex - 1))
